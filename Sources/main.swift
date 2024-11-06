@@ -47,12 +47,12 @@ Task.detached {
 	}
 }
 
-let app = try await Application.make(.production)
+let app = Application(.production)
 app.logger.logLevel = .warning
 app.http.server.configuration.port = 28859
 app.routes.defaultMaxBodySize = "10mb"
 
-Task { try await app.asyncShutdown() }
+defer { app.shutdown() }
 
 app.get("poll") { req -> Response in
 	return await apiPoll(req: req, state: state)
