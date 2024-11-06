@@ -17,6 +17,7 @@ let package = Package(
 		.package(url: "https://github.com/vapor/vapor", from: "4.63.0"),
 		.package(url: "https://github.com/dduan/TOMLDecoder", from: "0.1.2"),
 		.package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
+		.package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMajor(from: "0.57.0")),
 	],
 	targets: [
 		.executableTarget(
@@ -27,7 +28,8 @@ let package = Package(
 				"TOMLDecoder",
 				"AnyCodable",
 			],
-			path: "Sources"
+			path: "Sources",
+			plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
 		),
 	]
 )

@@ -2,6 +2,7 @@ import Vapor
 
 enum PlanNodeType: String, Codable {
 	case describe = "Describe"
+	// swiftlint:disable:next identifier_name
 	case it = "It"
 	case beforeAll = "BeforeAll"
 	case afterAll = "AfterAll"

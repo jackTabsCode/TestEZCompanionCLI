@@ -16,12 +16,16 @@ func apiPoll(req: Request, state: AppState) async -> Response {
 			testRoots: state.config.roots,
 			testExtraOptions: state.config.testExtraOptions ?? [:]
 		)
-		let data = try! JSONEncoder().encode(response)
 
-		return Response(status: .ok, body: .init(data: data))
+		do {
+			let data = try JSONEncoder().encode(response)
+			return Response(status: .ok, body: .init(data: data))
+		} catch {
+			req.logger.report(error: error)
+			return Response(status: .internalServerError, body: "Failed to encode response")
+		}
 	} else {
 		await state.insertPlace(key: placeGuid, place: place)
-
 		return Response(status: .forbidden)
 	}
 }
