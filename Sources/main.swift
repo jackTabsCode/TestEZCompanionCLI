@@ -10,7 +10,9 @@ struct Cli: ParsableCommand {
 let cli = try Cli.parse()
 
 let contents = try String(contentsOfFile: "testez-companion.toml")
-let config = try TOMLDecoder().decode(Config.self, from: contents)
+let decoder = TOMLDecoder()
+decoder.keyDecodingStrategy = .convertFromSnakeCase
+let config = try decoder.decode(Config.self, from: contents)
 
 let state = AppState(config: config, onlyLogFailures: cli.onlyPrintFailures)
 
@@ -79,7 +81,9 @@ func inquirePlace(state: AppState) async -> String? {
 	print("Enter the number of your choice:")
 	if let input = readLine(), let choice = Int(input), choice > 0, choice <= options.count {
 		let selected = options[choice - 1]
-		if let key = selected.components(separatedBy: "[").last?.trimmingCharacters(in: CharacterSet(charactersIn: "[]")) {
+		if let key = selected.components(separatedBy: "[").last?.trimmingCharacters(
+			in: CharacterSet(charactersIn: "[]"))
+		{
 			return key
 		}
 	}

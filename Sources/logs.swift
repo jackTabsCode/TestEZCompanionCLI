@@ -10,11 +10,6 @@ enum MessageType: Int, Codable {
 struct Log: Codable {
 	let message: String
 	let messageType: MessageType
-
-	enum CodingKeys: String, CodingKey {
-		case message
-		case messageType
-	}
 }
 
 func apiLogs(req: Request, state: AppState) async -> Response {

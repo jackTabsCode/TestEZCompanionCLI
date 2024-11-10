@@ -3,11 +3,6 @@ import AnyCodable
 struct Config: Decodable {
 	let roots: [String]
 	let testExtraOptions: [String: AnyCodable]?
-
-	enum CodingKeys: String, CodingKey {
-		case roots
-		case testExtraOptions = "test_extra_options"
-	}
 }
 
 struct ConfigResponse: Encodable {
